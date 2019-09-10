@@ -1,0 +1,41 @@
+Fase 0 - Selectie
+- MH-Z19 -> CO2
+- DHT22 -> Temp + Hum
+- MQ135 -> Air quality (tVOC's)
+- SSD1306 display of 4-line LCD
+
+Fase 1 Inkopen sensoren en vereisten
+- RGB leds (FOGGED 10pcs 5mm 4pins RGB LED Common Cathode Tri-Color Emitting Diodes Diffused
+- 16-pin socket (DIP16)		10 of 20 stuks
+- DIP 74hc595 register shift	10 of 20 stuks
+- MQ-135			2 stuks
+- SSD1306 display		1 stuks
+- 2-line LCD display 1602	2 stuks MET module (16x2 characters)
+- 4-line LCD display 1604	1 stuks MET module (16x4 characters)
+- 1K resistors			100 stuks
+- Arduino uno prototype shield	10 stuks
+- DHT22				4 stuks
+- MH-Z19 			1 stuks MET connector
+
+Fase 2
+- Opbouwen sensoren, per sensor subfase
+- 2.1 = DHT22
+- 2.2 = MQ135
+- 2.3 = MH-Z19
+
+Fase 3
+- Zichtbaar maken RGB leds met register shift
+
+Fase 4
+- Display? -> 4-line LCD
+
+Fase 5
+- Uitkristaliseren oplossing
+- Fritzing
+- BOM
+- Projectdocumentatie
+- Eventueel PCB design?
+- Ontwerp prototype box
+
+Fase 6
+- Eerste prototype

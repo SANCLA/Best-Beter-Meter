@@ -1,0 +1,7 @@
+MH-Z19		<->		Arduino
+
+Tx		Oranje		A0
+Rx		geel		A1
+PWM		groen		~9
+GND		zwart		GND
+Vin		rood		5V
