@@ -115,8 +115,8 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("Initialiseren...");
 
-  Serial.println("Heating up the sensor for 30 seconds...");
-  count = 30;
+  Serial.println("Heating up the sensor for 180 seconds...");
+  count = 180;
   while (count > 0 )                                  // repeat until count is no longer greater than zero
   {
     digitalWrite(ledPinStatus, HIGH);
@@ -193,25 +193,27 @@ void loop(void) {
   digitalWrite(ledPinStatus, HIGH);
   int ppm_uart = readCO2UART();
 
-  if (watchdog_uart_ppm >= 0 && watchdog_uart_ppm < 1000) {
+  if (co2ppm_average >= 0 && co2ppm_average < 1000) {
     //    Serial.println("LED: GREEN SOLID");
     digitalWrite(ledPinGreen, HIGH);
     digitalWrite(ledPinYellow, LOW);
     digitalWrite(ledPinRed, LOW);
     digitalWrite(ledPinStatus, LOW);
     delay(measure_every_ms);
-  } else if (watchdog_uart_ppm >= 1000 && watchdog_uart_ppm < 1500) {
+  } else if (co2ppm_average >= 1000 && co2ppm_average < 1500) {
     //    Serial.println("LED: YELLOW SOLID");
     digitalWrite(ledPinGreen, LOW);
     digitalWrite(ledPinYellow, HIGH);
     digitalWrite(ledPinRed, LOW);
     digitalWrite(ledPinStatus, LOW);
     delay(measure_every_ms);
-  } else if (watchdog_uart_ppm >= 1500) {
+  } else if (co2ppm_average >= 1500) {
     //   Serial.println("LED: RED");
     digitalWrite(ledPinGreen, LOW);
     digitalWrite(ledPinYellow, LOW);
+    digitalWrite(ledPinRed, HIGH);
     digitalWrite(ledPinStatus, LOW);
+    delay(measure_every_ms);
   }
   if (write_to_log == 1) {
     logfile.println();
@@ -295,6 +297,9 @@ int readCO2UART() {
   co2ppm_average_2 = co2ppm_average_1;
   co2ppm_average_1 = ppm_uart;
   co2ppm_average = ((co2ppm_average_1 + co2ppm_average_2 + co2ppm_average_3)/3);
+
+  // Correction temperature due to boxed sensor combined with SOC (no mechanical airflow)
+  temp = temp - 5;
  
   if (write_to_log == 1) {
     logfile.print(",");
