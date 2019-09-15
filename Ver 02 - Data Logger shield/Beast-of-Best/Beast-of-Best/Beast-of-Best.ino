@@ -13,12 +13,16 @@ SoftwareSerial co2Serial(A0, A1); // define MH-Z19 RX TX
 unsigned long startTime = millis();
 
 const byte PINtoRESET = 8; // reset pin
-const byte ledPinStatus = 4; //Blue led
-const byte ledPinGreen = 5; //Green led
-const byte ledPinYellow = 6; //Yellow led
-const byte ledPinRed = 7; //Red led
+const byte ledPinStatus = 7; //Blue led
+const byte ledPinGreen = 6; //Green led
+const byte ledPinYellow = 5; //Yellow led
+const byte ledPinRed = 4; //Red led
 const byte chipSelect = 10;
 int watchdog_uart_ppm;
+int co2ppm_average;
+int co2ppm_average_1;
+int co2ppm_average_2;
+int co2ppm_average_3;
 byte watchdog_temp;
 byte count;
 int measure_every_ms = 10000; // 10000 = 10 seconds
@@ -91,10 +95,10 @@ void setup() {
 #endif  //ECHO_TO_SERIAL
   }
 
-  if (! RTC.isrunning()) {
-    Serial.println("RTC is NOT running!");
-    RTC.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  }
+  //if (! RTC.isrunning()) {
+  //  Serial.println("RTC is NOT running!");
+  //  RTC.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  //}
 
 
   logfile.println("msrunning,unixtime,datetime,co2uart,temp");
@@ -281,26 +285,39 @@ int readCO2UART() {
   int ppm_uart = 256 * (int)response[2] + response[3];
   // temp
   byte temp = response[4] - 40;
+
+  co2ppm_average_3 = co2ppm_average_2;
+  co2ppm_average_2 = co2ppm_average_1;
+  co2ppm_average_1 = ppm_uart;
+  co2ppm_average = ((co2ppm_average_1 + co2ppm_average_2 + co2ppm_average_3)/3);
+ 
   if (write_to_log == 1) {
     logfile.print(",");
-    logfile.print(ppm_uart);
+    logfile.print(co2ppm_average);
     logfile.print(",");
     logfile.print(temp);
   }
 #if ECHO_TO_SERIAL
   Serial.print(",");
-  Serial.print(ppm_uart);
+  Serial.print("(");
+  Serial.print(co2ppm_average_1);
+  Serial.print("+");
+  Serial.print(co2ppm_average_2);
+  Serial.print("+");
+  Serial.print(co2ppm_average_3);
+  Serial.print(")=average:");
+  Serial.print(co2ppm_average);
   Serial.print(",");
   Serial.print(temp);
 #endif //ECHO_TO_SERIAL
 
-  watchdog_uart_ppm = ppm_uart;
+  watchdog_uart_ppm = co2ppm_average;
   watchdog_temp = temp;
 
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("CO2 : ");
-  lcd.print(ppm_uart);
+  lcd.print(co2ppm_average);
   lcd.print(" PPM");
   lcd.setCursor(0, 1);
   lcd.print("Temp: ");
