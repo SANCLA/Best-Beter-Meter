@@ -34,13 +34,21 @@ Elke 5 minuten worden deze gemiddelde waarden weggeschreven, inclusief tijd en d
 De Best Beter Meter heeft een 4-tal LED’s waarmee de status en de CO2 concentraties kunnen worden afgelezen, alsmede een LCD display waarop exacte waarden en status zichtbaar zijn.
 
 LED Status:
+
 LED     Status                        Resultaat
+
 Blauw   Continue                      Fout, zie LCD display…
+
 Blauw   Knippert kort (1 sec)         Intialiseren (duurt ca 30 seconden)
+
 Blauw   Knipprt zeer kort (100 ms)    Wegschrijven meeting naar SD geheugenkaart
+
 Blauw   Knippert lang (3 sec)         Meting  CO2 en temperatuur waarde
+
 Groen   Continue                      CO2 waarde lager dan 1000 PPM
+
 Geel    Continue                      CO2 waarde tussen de 1000 PPM en de 1500 PPM
+
 Rood    Continue                      CO2 waarde hoger dan 1500 PPM
 
 3. CO2 concentraties
@@ -58,12 +66,19 @@ Elke keer als de Best Beter Meter wordt aangesloten zal deze, omhoog nummerend, 
 In het registratiebestand worden de navolgende zaken in CSV (Comma Seperated Value) formaat opgenomen:
 
 Veld        Voorbeeld             Omschrijving
+
 msrunning   1237064431            Aantal miliseconden dat de Best Beter Meter actief is sinds de laatste herstart
+
 unixtime    1568559342            Datum/Tijd van registratie in het UNIX time format
+
 datetime    2019/9/15 14:54:31    Datum/Tijd van registratie in het volgende format:
+
                                   jaar/maand/dag uur:minuten:seconden
+                                  
 co2uart     988                   CO2 waarde (gemiddelde van 3 metingen)
+
 temp        21                    Temperatuur waarde (gemiddelde van 3 metingen)
+
 
 De SD kaart dient in het FAT16 of FAT32 bestandsformaat geformateerd te zijn.
 Als tijdens het actief zijn van de Best Beter Meter de SD kaart onverwacht wordt verwijderd kan er corruptie onstaan in het registratiebestand en zal de registratie van metingen op de SD kaart stoppen totdat de Best Beter Meter opnieuw wordt opgestart. 
