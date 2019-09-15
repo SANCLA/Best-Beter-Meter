@@ -1,10 +1,11 @@
 # Best-Beter-Meter
 
-Best Beter Meter
 CO2 en temperatuur monitor
 
 Versie:					03
+
 Datum:				15-9-2019
+
 Ontwikkelbron:		https://github.com/SANCLA/Best-Beter-Meter
 
 Introductie Best Beter Meter
